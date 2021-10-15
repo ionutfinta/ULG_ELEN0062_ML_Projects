@@ -22,6 +22,14 @@ from sklearn.model_selection import cross_val_score
 # ...
 
 
+def creation_LS(X,y,N):
+    number_of_rows = X.shape[0]
+    random_indices = np.random.choice(number_of_rows, size=N, replace=False)
+    X_random_rows = X[random_indices, :]
+    y_random_rows=  y[random_indices]
+    return X_random_rows, y_random_rows
+
+
 if __name__ == "__main__":
     # Put your code here
     
@@ -104,17 +112,47 @@ if __name__ == "__main__":
     X_test_q3=X[2500:,0:] #PROBLEME, ils mettent 500 éléments pourtant 2999-2500=499????
     y_test_q3=y[2500:]    
    
+    X_train_q3=X[:2500,0:]
+    y_train_q3=y[:2500]
+    
     N_LS=[50,150,250,350,450,500]
     
+    
+    
+    #For each N I have a vector score_N that I want to draw
+    
+    
     for N in N_LS: #grande boucle sur la taille du LS
+
+        score_N=[] #score_N est vide au début, on va y mettre les scores pour un N (pour chaque k)
+
+        for k in range(1,N+1):#boucle sur k,ça va de 1 à N compris
+            score_k=0 #score_k est le score pour un k
         
-        for k in range(1,N+1): #boucle sur k
-            knn_q3= KNeighborsClassifier(n_neighbors=k) #1 classifier pour chaque k
+           
             
-            for i in range (1,11) #boucle pour fit knn sur les 10 LS + leur création
+            for i in range (1,11):#boucle(de 1 à 10 compris)pour fit knn sur les 10 LS + leur création
+                knn_q3= KNeighborsClassifier(n_neighbors=k) #1 classifier pour chaque k
+                X_q3_LS, y_q3_LS=creation_LS(X_train_q3,y_train_q3,N)
+                knn_q3.fit( X_q3_LS, y_q3_LS)
+                
+                y_pred_q3=knn_q3.predict(X_test_q3)   
+                score_tmp=accuracy_score(y_test_q3, y_pred_q3)
+                
+                score_k= score_k + score_tmp #On additionne pour avoir le total des 10 scores
+                
+            
+            score_k= score_k/10
+            score_N[k]=score_k #attention aux indices
+            #draw here
             
             
             
+            
+            
+            
+        
+           
             
         
     
