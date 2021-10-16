@@ -17,11 +17,9 @@ from sklearn.base import ClassifierMixin
 
 
 class LogisticRegressionClassifier(BaseEstimator, ClassifierMixin):
-
     def __init__(self, n_iter=10, learning_rate=1):
         self.n_iter = n_iter
         self.learning_rate = learning_rate
-
 
     def fit(self, X, y):
         """Fit a logistic regression models on (X, y)
@@ -116,8 +114,9 @@ class LogisticRegressionClassifier(BaseEstimator, ClassifierMixin):
             The class probabilities of the input samples. Classes are ordered
             by lexicographic order.
         """
-        # TODO insert your code here
-        pass
+        y= self.forward_propagation(X, self.W, self.b)
+        y = y.reshape(y.shape[0])
+        return y
 
 if __name__ == "__main__":
     pass
