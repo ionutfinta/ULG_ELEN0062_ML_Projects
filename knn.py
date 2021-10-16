@@ -69,15 +69,21 @@ if __name__ == "__main__":
     
     #LEARN A MODEL = FIT THE MODEL PARAMETERS
     
-    #clf= KNeighborsClassifier(n_neighbors=1) #We instanciate a KNeighbors object
+    N_neighbors=[1,5,50,100,500]
+    
+    for N_neigh in N_neighbors:
+        clf= KNeighborsClassifier(n_neighbors= N_neigh) 
+                                            #We instanciate a KNeighbors object
                                             #n_neighbors=1,5,50,100 and 500
-    #clf.fit(X_train, y_train)
+        clf.fit(X_train, y_train)
 
     #DECISION BOUNDARY
-   
-    #plot_boundary("TestBoundary(1n)", clf, X_test, y_test, 0.1, title="TestBoundary(1n)")
+        name= 'Boundary %d' %N_neigh
+        #print(name)
+        title= 'Decision boudary for k=%d' %N_neigh
+        #print(title)
+        plot_boundary(name, clf, X_test, y_test, 0.1, title=title)
     
-    #y_pred=clf.predict(X_test)
     
     #score1=accuracy_score(y_test, y_pred)
     
@@ -116,8 +122,8 @@ if __name__ == "__main__":
     y_train_q3=y[:2500]
     
     N_LS=[50,150,250,350,450,500]
-    
-    
+    optimal_value=[]
+        
     
     #For each N I have a vector score_N that I want to draw
     
@@ -146,7 +152,9 @@ if __name__ == "__main__":
             score_N.append(score_k)
             #score_N[k]=score_k
         
-        #PLOT #draw here, ici on a le score_N du N courant   
+        #PLOT #draw here, ici on a le score_N du N courant
+        optimal_value_N=max(score_N)
+        optimal_value.append(optimal_value_N)
         if N==50:
             x_plot = range(1,51)
             plt.plot(x_plot,score_N, color='b')
@@ -169,8 +177,12 @@ if __name__ == "__main__":
             plt.ylabel('average accuracy')
             plt.suptitle('Evolution of mean test accuracies', fontsize=11)
             
-    
-    
+    #Q3B, k optimal en fonction de N  ,plot dots          
+    plt.plot(N_LS, optimal_value, 'o', color='black');       
+    plt.xlabel('training set size')        
+    plt.ylabel('number of neighbors')
+    plt.suptitle('Evolution of the optimal value of the number of neighbors', fontsize=11)    
+            
     
     
     
