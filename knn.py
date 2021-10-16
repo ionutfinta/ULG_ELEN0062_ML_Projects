@@ -69,40 +69,40 @@ if __name__ == "__main__":
     
     #LEARN A MODEL = FIT THE MODEL PARAMETERS
     
-    clf= KNeighborsClassifier(n_neighbors=1) #We instanciate a KNeighbors object
+    #clf= KNeighborsClassifier(n_neighbors=1) #We instanciate a KNeighbors object
                                             #n_neighbors=1,5,50,100 and 500
-    clf.fit(X_train, y_train)
+    #clf.fit(X_train, y_train)
 
     #DECISION BOUNDARY
    
-    plot_boundary("TestBoundary(1n)", clf, X_test, y_test, 0.1, title="TestBoundary(1n)")
+    #plot_boundary("TestBoundary(1n)", clf, X_test, y_test, 0.1, title="TestBoundary(1n)")
     
-    y_pred=clf.predict(X_test)
+    #y_pred=clf.predict(X_test)
     
-    score1=accuracy_score(y_test, y_pred)
+    #score1=accuracy_score(y_test, y_pred)
     
-    print(score1)
+    #print(score1)
     
     #Fin pour la Q1
     
     #10-FOLD-CROSS VALIDATION
   
-    nb_neighbors=[1,5,50,100,500]
-    mean_scores=[]
-    for nb in nb_neighbors:
+    #nb_neighbors=[1,5,50,100,500]
+    #mean_scores=[]
+    #for nb in nb_neighbors:
         
-        knn=KNeighborsClassifier(n_neighbors=nb)
-        scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
-        mean_tmp=scores.mean() #mean of the scores of the 10 cv
-        mean_scores.append(mean_tmp)  #on met ds ce vecteur les moyennes pour chaque nb
+        #knn=KNeighborsClassifier(n_neighbors=nb)
+        #scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
+        #mean_tmp=scores.mean() #mean of the scores of the 10 cv
+       # mean_scores.append(mean_tmp)  #on met ds ce vecteur les moyennes pour chaque nb
     
     
-    max_mean_scores = max(mean_scores)
-    print("Le score max vaut :")
-    print(max_mean_scores)
-    max_index = mean_scores.index(max_mean_scores)
-    print("Ce qui correspond à l'indice :")
-    print(max_index)
+    #max_mean_scores = max(mean_scores)
+    #print("Le score max vaut :")
+    #print(max_mean_scores)
+    #max_index = mean_scores.index(max_mean_scores)
+    #print("Ce qui correspond à l'indice :")
+    #print(max_index)
     
     #Fin pour la Q2
     
@@ -143,21 +143,32 @@ if __name__ == "__main__":
                 
             
             score_k= score_k/10
-            score_N[k]=score_k #attention aux indices
-            #draw here
-            
-            
-            
-            
-            
-            
+            score_N.append(score_k)
+            #score_N[k]=score_k
         
-           
+        #PLOT #draw here, ici on a le score_N du N courant   
+        if N==50:
+            x_plot = range(1,51)
+            plt.plot(x_plot,score_N, color='b')
+        elif N==150:
+            x_plot = range(1,151)
+            plt.plot(x_plot,score_N, color='g')    
+        elif N==250:
+            x_plot = range(1,251)
+            plt.plot(x_plot,score_N, color='r')    
+        elif N==350:
+            x_plot = range(1,351)
+            plt.plot(x_plot,score_N, color='c')    
+        elif N==450:
+            x_plot = range(1,451)
+            plt.plot(x_plot,score_N, color='m')    
+        elif N==500:
+            x_plot = range(1,501)
+            plt.plot(x_plot,score_N, color='y')
+            plt.xlabel('number of neighbors')
+            plt.ylabel('average accuracy')
+            plt.suptitle('Evolution of mean test accuracies', fontsize=11)
             
-        
-    
-    
-    
     
     
     
