@@ -67,6 +67,7 @@ if __name__ == "__main__":
     print('LS size = {}'.format(X_train.shape))
     print('TS size = {}'.format(X_test.shape)) 
     
+    print("QUESTION 1 QUESTION 1 QUESTION 1 ")
     #LEARN A MODEL = FIT THE MODEL PARAMETERS
     
     N_neighbors=[1,5,50,100,500]
@@ -90,28 +91,28 @@ if __name__ == "__main__":
     #print(score1)
     
     #Fin pour la Q1
-    
+    print("QUESTION 2 QUESTION 2 QUESTION 2 ")
     #10-FOLD-CROSS VALIDATION
   
-    #nb_neighbors=[1,5,50,100,500]
-    #mean_scores=[]
-    #for nb in nb_neighbors:
+    nb_neighbors=[1,5,50,100,500]
+    mean_scores=[]
+    for nb in nb_neighbors:
         
-        #knn=KNeighborsClassifier(n_neighbors=nb)
-        #scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
-        #mean_tmp=scores.mean() #mean of the scores of the 10 cv
-       # mean_scores.append(mean_tmp)  #on met ds ce vecteur les moyennes pour chaque nb
+        knn=KNeighborsClassifier(n_neighbors=nb)
+        scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
+        mean_tmp=scores.mean() #mean of the scores of the 10 cv
+        mean_scores.append(mean_tmp)  #on met ds ce vecteur les moyennes pour chaque nb
     
     
-    #max_mean_scores = max(mean_scores)
-    #print("Le score max vaut :")
-    #print(max_mean_scores)
-    #max_index = mean_scores.index(max_mean_scores)
-    #print("Ce qui correspond à l'indice :")
-    #print(max_index)
+    max_mean_scores = max(mean_scores)
+    print("The mean accuracy of the optimal value of n_neighbors is :")
+    print(max_mean_scores)
+    max_index = mean_scores.index(max_mean_scores)
+    print("The optimal value of n_neighbors is %d : " %nb_neighbors[max_index])
+    
     
     #Fin pour la Q2
-    
+    print("QUESTION 3 QUESTION 3 QUESTION 3 ")
     #Fixed test set of size 500
     
     #matrice et vecteur tests fixes de 500 éléments
@@ -150,7 +151,7 @@ if __name__ == "__main__":
             
             score_k= score_k/10
             score_N.append(score_k)
-            #score_N[k]=score_k
+            
         
         #PLOT #draw here, ici on a le score_N du N courant
         optimal_value_N=max(score_N)
@@ -177,11 +178,12 @@ if __name__ == "__main__":
             plt.ylabel('average accuracy')
             plt.suptitle('Evolution of mean test accuracies', fontsize=11)
             
-    #Q3B, k optimal en fonction de N  ,plot dots          
-    plt.plot(N_LS, optimal_value, 'o', color='black');       
-    plt.xlabel('training set size')        
+    #Q3B, k optimal en fonction de N  plot dots          
+    plt.figure()
+    plt.plot(N_LS, optimal_value, 'o', color='black')
+    plt.xlabel('training set size') 
     plt.ylabel('number of neighbors')
-    plt.suptitle('Evolution of the optimal value of the number of neighbors', fontsize=11)    
+    plt.suptitle('Evolution of the optimal value of the number of neighbors', fontsize=11)
             
     
     
